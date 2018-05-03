@@ -1,0 +1,8 @@
+.friendsList{
+  background-color: pink;
+  width: 30vw;
+  min-height: 100vh;  
+  overflow-y: scroll;
+  display: inline-block;
+  float: left;
+}

@@ -1,0 +1,54 @@
+.header{
+  width: 100vw;
+  height: 5vw;
+  background-color: red;
+  margin: 0px;
+}
+
+.logo{
+  width: 30vw;
+}
+
+.logo p{
+  font-family: monospace;
+  font-size: 4vw;
+  color: white;
+  margin: 0px;
+  margin-left: 3vw;
+  display: inline-block;
+  float: left;
+}
+
+.logBlock{
+  display: inline-block;
+  float: right;
+}
+
+.logBlock p{
+  font-family: monospace;
+  font-size: 4vw;
+  color: white;
+  margin: 0px;
+  display: inline-block;
+  float: left;
+}
+
+.logBlock input{
+  font-family: monospace;
+  font-size: 3vw;
+  margin: 0px;
+  margin-top: 0.5vw;
+  margin-left: 1vw;
+  display: inline-block;
+  float: left;
+}
+
+.logBlock button{
+  font-family: monospace;
+  font-size: 3vw;
+  margin: 0px;
+  margin-top: 0.5vw;
+  margin-left: 1vw;
+  display: inline-block;
+  float: left;
+}

@@ -1,0 +1,57 @@
+.chatroom{
+  background-color: white;
+  width: 66vw;
+  min-height: 100vh;
+  display: inline-block;
+  float: left;
+}
+
+.chatblock{
+  background-color: white;
+  width: 66vw;
+  height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.chatblock div{
+  direction: ltr;
+  position: relative;
+  overflow-x: hidden;
+  word-break: break-all;
+  bottom: 0px;
+  right: 0px;
+  height: 140px;
+  max-width: 63vw;
+}
+
+.left p{
+  display: inline-block;
+  float: left;  
+}
+
+.right p{
+  display: inline-block;
+  float: right;
+}
+
+.chatbar{
+  background-color: white;
+  width: 68vw;
+  height: 10vh;
+}
+
+.chatbar input{
+  display: inline-block;
+  float: left;
+  width: 64vw;
+  height: 10vh;
+}
+
+.chatbar p{
+  display: inline-block;
+  float: left;
+  font-size: 5vw;
+  margin: auto;
+  cursor: pointer;
+}
