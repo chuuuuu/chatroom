@@ -4,7 +4,8 @@ import FriendsList from './friendsList';
 import ChatRoom from './chatroom';
 import './chatroomapp.css';
 import {Friend, Content} from "./util";
-//changing friends into dictionary!!!
+import axios from 'axios';
+
 class ChatRoomApp extends Component {
   constructor() {
     super();
@@ -22,18 +23,28 @@ class ChatRoomApp extends Component {
   login(id) {
     console.log("login!")
     //need to load data from server!
-    this.setState({
-      id: id,
-      friends: {},
+    axios.get('/api/user/'+id)
+    .then((res) => {
+      console.log(res.data);
+      this.setState({
+        id: id,
+        friends: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
   logout() {
     console.log("logout!")
     //need to send data to server!
+    console.log(this.state.friends);
+    axios.put("/api/user/" + this.state.id, this.state.friends);
     this.setState({
       id: undefined,
       friends: {},
+      chattingId: undefined,
     });
   }
 
@@ -66,18 +77,33 @@ class ChatRoomApp extends Component {
   }
 
   render() {
+
+    var main;
+    var chatroom;
+    if(this.state.chattingId !== undefined)
+    {
+      chatroom = (
+      <ChatRoom updateContents={this.updateContents}
+        id={this.state.id}
+        chattingId={this.state.chattingId}
+        contents={
+          (this.state.friends[this.state.chattingId] == undefined) ? [] : this.state.friends[this.state.chattingId].contents} />)
+    }
+    if(this.state.id !== undefined)
+    {
+      main = (
+      <div>
+        <FriendsList chatwith={this.chatwith} id={this.state.id} friends={this.state.friends} />
+        {chatroom}
+      </div>
+      );
+    }
+
+
     return (
       <div className="frame">
         <Header login={this.login} logout={this.logout} id={this.state.id}/>
-        <div>
-          <FriendsList chatwith={this.chatwith} id={this.state.id} friends={this.state.friends}/>
-          <ChatRoom updateContents={this.updateContents} 
-                    id={this.state.id} 
-                    chattingId={this.state.chattingId} 
-                    contents={
-                      (this.state.chattingId == undefined)? []: 
-                      ((this.state.friends[this.state.chattingId] == undefined)? [] : this.state.friends[this.state.chattingId].contents)}/>
-        </div>
+        {main}
       </div>
     );
   }
