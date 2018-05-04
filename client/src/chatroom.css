@@ -1,7 +1,6 @@
 .chatroom{
   background-color: white;
-  width: 66vw;
-  min-height: 100vh;
+  width: calc(100vw - 300px);
   display: inline-block;
   float: left;
 }
@@ -15,8 +14,8 @@
 
 .chatblock{
   background-color: white;
-  width: 66vw;
-  height: 80vh;
+  width: calc(100vw - 300px);
+  height: calc(80vh - 28px);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -28,7 +27,7 @@
   word-break: break-all;
   bottom: 0px;
   right: 0px;
-  max-width: 63vw;
+  max-width: calc(95vw - 300px);
   font-family: monospace;
   font-size: 25px;
 }
@@ -49,21 +48,20 @@
 
 .chatbar{
   background-color: white;
-  width: 68vw;
-  height: 10vh;
+  width: calc(100vw - 300px);
 }
 
 .chatbar input{
   display: inline-block;
   float: left;
-  width: 64vw;
-  height: 5vh;
+  width: calc(100vw - 400px);;
+  font-size: 28px;
 }
 
 .chatbar p{
   display: inline-block;
   float: left;
-  font-size: 5vw;
+  font-size: 32px;
   margin: auto;
   cursor: pointer;
 }

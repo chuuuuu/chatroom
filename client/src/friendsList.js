@@ -15,7 +15,6 @@ class FriendsList extends Component {
     if (e.key === "Enter") {
       axios.get('/api/find/' + e.target.value)
       .then((res) => {
-        console.log(res.data);
         if(res.data.id !== undefined){
           this.props.chatwith(e.target.value);
           e.target.value = "";

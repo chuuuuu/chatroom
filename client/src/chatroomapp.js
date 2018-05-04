@@ -23,17 +23,14 @@ class ChatRoomApp extends Component {
   }
 
   login(id) {
-    console.log("login!")
     //need to load data from server!
     axios.get('/api/login/'+id)
     .then((res) => {
-      console.log(res.data);
       this.setState({
         id: id,
         friends: res.data.friends,
       });
       this.setIntervalCall = setInterval(() => {
-        console.log("send required to server");
         axios.get("/api/check/"+id)
         .then((res) => {
           this.notice(res.data) })}, 1000);
@@ -44,8 +41,6 @@ class ChatRoomApp extends Component {
   }
 
   logout() {
-    console.log("logout!")
-    console.log(this.state.friends);
     clearInterval(this.setIntervalCall)
     this.setState({
       id: undefined,
@@ -98,7 +93,6 @@ class ChatRoomApp extends Component {
 
   notice(buffer){
     for(let i=0; i !== buffer.length; i++){
-      console.log("buffer[",i,"]",buffer[i]);
       this.updateContents(buffer[i].content, buffer[i].friendId, false);
     }
   }

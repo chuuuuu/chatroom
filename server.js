@@ -2,6 +2,7 @@ class Friend {
   constructor(id) {
     this.id = id;
     this.contents = [];
+    this.newMessageNum = 0;
   }
 }
 
@@ -84,8 +85,9 @@ var friendNet = new FriendNet();
 
 app.use(bodyParser.json());
 
+app.use(express.static(__dirname + "/client/build"));
+
 app.get("/api/login/:id", (req, res, next) => {
-  console.log(req.params.id);
   friendNet.login(req.params.id);
   var friends = friendNet.users[req.params.id].friends
   res.send({friends});
@@ -105,7 +107,6 @@ app.get("/api/check/:id", (req, res, next) => {
 app.post("/api/update/:id", (req, res, next) => {
   //store the message sent by id to buffer.
   friendNet.updateContent(req.params.id, req.body.friendId, req.body.content)
-  console.log(req.body);
   friendNet.send("");
 })
 

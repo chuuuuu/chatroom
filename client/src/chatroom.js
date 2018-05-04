@@ -25,19 +25,16 @@ class ChatRoom extends Component {
 
   componentDidUpdate(){
     var emt = document.getElementsByClassName("chatblock")[0];
-    console.log(emt.scrollHeight);
     emt.scrollTo(0, emt.scrollHeight);
   }
 
   componentDidMount(){
     var emt = document.getElementsByClassName("chatblock")[0];
-    console.log(emt.scrollHeight);
     emt.scrollTo(0, emt.scrollHeight);    
   }
 
   render() {
     var contents;
-    console.log(this.props.contents)
     contents = this.props.contents.map((content) => {
       if(content.isSentByMe){
         return (
@@ -54,8 +51,6 @@ class ChatRoom extends Component {
         )
       }
     })
-    console.log(this.props.contents);
-    console.log(contents);
     return (
       <div className="chatroom">
         <div className="chattingInfo">
