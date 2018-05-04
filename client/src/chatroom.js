@@ -23,6 +23,18 @@ class ChatRoom extends Component {
     }
   }
 
+  componentDidUpdate(){
+    var emt = document.getElementsByClassName("chatblock")[0];
+    console.log(emt.scrollHeight);
+    emt.scrollTo(0, emt.scrollHeight);
+  }
+
+  componentDidMount(){
+    var emt = document.getElementsByClassName("chatblock")[0];
+    console.log(emt.scrollHeight);
+    emt.scrollTo(0, emt.scrollHeight);    
+  }
+
   render() {
     var contents;
     console.log(this.props.contents)
@@ -46,14 +58,14 @@ class ChatRoom extends Component {
     console.log(contents);
     return (
       <div className="chatroom">
-        <div>
+        <div className="chattingInfo">
           <p>{this.props.chattingId}</p>
         </div>
         <div className="chatblock">
           {contents}
         </div>
         <div className="chatbar" >
-          <input placeholder="type something" onKeyPress={this.updateChatInput} />
+          <input autoFocus placeholder="type something" onKeyPress={this.updateChatInput} />
           <p>👍</p>
         </div>
       </div>

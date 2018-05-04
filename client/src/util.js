@@ -2,6 +2,7 @@ class Friend{
   constructor(id){
     this.id = id;
     this.contents = [];
+    this.newMessageNum = 0;
   }
 }
 

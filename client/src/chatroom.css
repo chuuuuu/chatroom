@@ -6,10 +6,17 @@
   float: left;
 }
 
+.chattingInfo{
+  font-family: monospace;
+  font-size: 30px;
+  text-align: center;
+  height: 5vh;
+}
+
 .chatblock{
   background-color: white;
   width: 66vw;
-  height: 90vh;
+  height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -21,8 +28,13 @@
   word-break: break-all;
   bottom: 0px;
   right: 0px;
-  height: 140px;
   max-width: 63vw;
+  font-family: monospace;
+  font-size: 25px;
+}
+
+.chatblock p{
+  margin: 10px;
 }
 
 .left p{
@@ -45,7 +57,7 @@
   display: inline-block;
   float: left;
   width: 64vw;
-  height: 10vh;
+  height: 5vh;
 }
 
 .chatbar p{

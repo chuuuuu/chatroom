@@ -31,15 +31,34 @@ class FriendsList extends Component {
   }
 
   render() {
-    console.log(this.props.friends);
-    var friends = this.props.friends.map((friend) => {
-      return(<li>{friend.id}</li>);
+    var friends = [];
+    friends = this.props.friends.map((friend) => {
+      if(friend.id == this.props.chattingId){
+        return(
+          <p onClick={() => {
+            this.props.chatwith(friend.id);
+          }} className="chatting">{friend.id}</p>
+        );
+      }
+      else if(friend.newMessageNum == 0){
+        return(
+          <p onClick={() => {
+            this.props.chatwith(friend.id);
+          }} className="notChatting">{friend.id}</p>
+        );
+      }
+      else{
+        return(
+          <p onClick={() => {
+            this.props.chatwith(friend.id);
+          }} className="newMessage">{friend.id}({friend.newMessageNum})</p>
+        );
+      }
     })
-
 
     return (
       <div className="friendsList">
-        <input placeholder="Search" onKeyPress={this.updateSearchInput} />
+        <input autoFocus placeholder="Search" onKeyPress={this.updateSearchInput} />
         {friends}
       </div>
     );

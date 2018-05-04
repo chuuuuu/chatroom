@@ -33,6 +33,7 @@ class ChatRoomApp extends Component {
         friends: res.data.friends,
       });
       this.setIntervalCall = setInterval(() => {
+        console.log("send required to server");
         axios.get("/api/check/"+id)
         .then((res) => {
           this.notice(res.data) })}, 1000);
@@ -54,10 +55,24 @@ class ChatRoomApp extends Component {
   }
 
   chatwith(id) {
-    console.log("chat with " + id + "!");
-    this.setState({
-      chattingId: id,
-    });
+    this.state.chattingId = id;
+
+    var index = this.state.friends.findIndex((friend) => {
+      return (friend.id == this.state.chattingId);
+    })
+
+    if (index != -1) {
+      this.state.friends[index].newMessageNum = 0;
+      this.setState({
+        friends: this.state.friends,
+        chattingId: id,
+      })
+    }
+    else{
+      this.setState({
+        chattingId: id,
+      });
+    }
   }
 
   updateContents(content, id, isSentByMe = true) {
@@ -72,15 +87,25 @@ class ChatRoomApp extends Component {
       this.state.friends.splice(0, 0, friend[0]);
     }
     this.state.friends[0].contents.push(new Content(isSentByMe, content));
+    if(this.state.friends[0].id !== this.state.chattingId){
+      this.state.friends[0].newMessageNum++;
+    }
     this.setState({
       friends: this.state.friends,
     });
   }
 
+
   notice(buffer){
     for(let i=0; i !== buffer.length; i++){
       console.log("buffer[",i,"]",buffer[i]);
       this.updateContents(buffer[i].content, buffer[i].friendId, false);
+    }
+  }
+
+  componentDidUpdate(){
+    if(this.state.chattingId !== undefined){
+      document.title = this.state.chattingId;
     }
   }
 
@@ -113,7 +138,11 @@ class ChatRoomApp extends Component {
     {
       main = (
       <div>
-        <FriendsList chatwith={this.chatwith} id={this.state.id} friends={this.state.friends} />
+        <FriendsList 
+          chatwith={this.chatwith} 
+          id={this.state.id} 
+          friends={this.state.friends} 
+          chattingId={this.state.chattingId}/>
         {chatroom}
       </div>
       );

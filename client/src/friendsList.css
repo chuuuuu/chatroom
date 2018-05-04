@@ -1,8 +1,43 @@
 .friendsList{
   background-color: pink;
   width: 30vw;
-  min-height: 100vh;  
+  min-height: 100vh;
   overflow-y: scroll;
   display: inline-block;
   float: left;
+}
+
+.friendsList input{
+  font-size: 3vw;
+  width: 25vw;
+  margin: 1vw;
+}
+
+.chatting {
+  background-color:rgb(255, 180, 180);
+  font-size: 3vw;
+  margin: 0px;
+  padding: 1vw;
+  font-family: monospace; 
+  color: black;
+  cursor: pointer;
+}
+
+.notChatting {
+  font-size: 3vw;
+  margin: 0px;
+  padding: 1vw;
+  font-family: monospace; 
+  color: gray;
+  cursor: pointer;
+}
+
+.newMessage {
+  font-size: 3vw;
+  margin: 0px;
+  padding: 1vw;
+  font-family: monospace; 
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
 }

@@ -4,9 +4,6 @@ import './header.css';
 class Header extends Component {
   constructor(){
     super();
-    this.state = {
-      logInput: "",
-    }
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.updateLogInput = this.updateLogInput.bind(this);
@@ -16,20 +13,11 @@ class Header extends Component {
     if(e.key === "Enter"){
       this.login();
     }
-    else{
-      this.state.logInput += e.key
-      this.setState({
-        logInput: this.state.logInput,
-      });
-    }
   }
 
   login() {
-    this.props.login(this.state.logInput);
-    this.state.logInput = "";
-    this.setState({
-      logInput: this.state.logInput,
-    });
+    this.props.login(document.getElementById("logInput").value);
+    document.getElementById("logInput").value = "";
   }
 
   logout() {
@@ -43,7 +31,7 @@ class Header extends Component {
       userLogBlock = (
         <div className="logBlock">
           <p>id</p>
-          <input value={this.state.logInput} onKeyPress={this.updateLogInput}/>
+          <input autoFocus id="logInput" onKeyPress={this.updateLogInput}/>
           <button onClick={this.login}>login</button>
         </div>
       )

@@ -51,10 +51,10 @@ class FriendNet{
       this.users[sender].friends.unshift(new Friend(reciever));
       if(sender != reciever){
         this.users[reciever].friends.unshift(new Friend(sender));
-      }
+      };
     }
     else{
-      friend = this.users[sender].friends.splice(index, 1);
+      var friend = this.users[sender].friends.splice(index, 1);
       this.users[sender].friends.splice(0, 0, friend[0]);
 
       if(sender != reciever){
@@ -106,6 +106,7 @@ app.post("/api/update/:id", (req, res, next) => {
   //store the message sent by id to buffer.
   friendNet.updateContent(req.params.id, req.body.friendId, req.body.content)
   console.log(req.body);
+  friendNet.send("");
 })
 
 app.listen(3002, () => {
