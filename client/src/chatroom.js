@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './chatroom.css';
 import { Friend, Content } from "./util";
-
+import axios from 'axios';
 class ChatRoom extends Component {
   constructor() {
     super();
@@ -15,13 +15,17 @@ class ChatRoom extends Component {
 
   updateChatInput(e) {
     if (e.key === "Enter") {
-      this.props.updateContents(e.target.value);
+      var friendId = this.props.chattingId;
+      var content = e.target.value;
+      axios.post("/api/update/" + this.props.id, {friendId, content});
+      this.props.updateContents(e.target.value, this.props.chattingId);
       e.target.value = "";
     }
   }
 
   render() {
     var contents;
+    console.log(this.props.contents)
     contents = this.props.contents.map((content) => {
       if(content.isSentByMe){
         return (
@@ -33,7 +37,7 @@ class ChatRoom extends Component {
       else{
         return(
           <div className="left">
-            <p>content.content</p>
+            <p>{content.content}</p>
           </div>
         )
       }

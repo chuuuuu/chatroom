@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './friendsList.css';
 import { Friend, Content } from "./util";
+import axios from 'axios';
 
 class FriendsList extends Component {
   constructor() {
@@ -10,17 +11,31 @@ class FriendsList extends Component {
 
 
   updateSearchInput(e){
+    e.persist()//https://reactjs.org/docs/events.html#event-pooling
     if (e.key === "Enter") {
-      this.props.chatwith(e.target.value);
-      e.target.value = "";
+      axios.get('/api/find/' + e.target.value)
+      .then((res) => {
+        console.log(res.data);
+        if(res.data.id !== undefined){
+          this.props.chatwith(e.target.value);
+          e.target.value = "";
+        }
+        else{
+          alert("the user does not exist");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   }
 
   render() {
-    var friends = [];
-    for(let key in this.props.friends){
-      friends.push(<li>{key}</li>);
-    }
+    console.log(this.props.friends);
+    var friends = this.props.friends.map((friend) => {
+      return(<li>{friend.id}</li>);
+    })
+
 
     return (
       <div className="friendsList">

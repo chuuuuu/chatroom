@@ -11,25 +11,31 @@ class ChatRoomApp extends Component {
     super();
     this.state = {
       id: undefined,
-      friends: {},
+      friends: [],
       chattingId: undefined,//the id who is chatting with us.
     }
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.chatwith = this.chatwith.bind(this);
     this.updateContents = this.updateContents.bind(this);
+    this.notice = this.notice.bind(this);
+    this.setIntervalCall = undefined;
   }
 
   login(id) {
     console.log("login!")
     //need to load data from server!
-    axios.get('/api/user/'+id)
+    axios.get('/api/login/'+id)
     .then((res) => {
       console.log(res.data);
       this.setState({
         id: id,
-        friends: res.data,
+        friends: res.data.friends,
       });
+      this.setIntervalCall = setInterval(() => {
+        axios.get("/api/check/"+id)
+        .then((res) => {
+          this.notice(res.data) })}, 1000);
     })
     .catch((err) => {
       console.log(err);
@@ -38,57 +44,71 @@ class ChatRoomApp extends Component {
 
   logout() {
     console.log("logout!")
-    //need to send data to server!
     console.log(this.state.friends);
-    axios.put("/api/user/" + this.state.id, this.state.friends);
+    clearInterval(this.setIntervalCall)
     this.setState({
       id: undefined,
-      friends: {},
+      friends: [],
       chattingId: undefined,
     });
   }
 
   chatwith(id) {
     console.log("chat with " + id + "!");
-    // var index = this.state.friends.find((friend) => {
-    //   return (friend.id == id);
-    // });
-    // if(index === undefined){
-    //   this.state.friends.push(new Friend(id));
-    //   console.log(this.state.friends)
-    // }
-    // else{
-    //   console.log("you are already friends")
-    // }
     this.setState({
       chattingId: id,
     });
   }
 
-  updateContents(content) {
-    if(this.state.friends[this.state.chattingId] === undefined)
-    {
-      this.state.friends[this.state.chattingId] = new Friend(this.state.chattingId);
+  updateContents(content, id, isSentByMe = true) {
+    var index = this.state.friends.findIndex((friend) => {
+      return (friend.id == id);
+    })
+    if (index == -1) {
+      this.state.friends.unshift(new Friend(id))
     }
-    this.state.friends[this.state.chattingId].contents.push(new Content(true, content));
+    else{
+      var friend = this.state.friends.splice(index, 1);
+      this.state.friends.splice(0, 0, friend[0]);
+    }
+    this.state.friends[0].contents.push(new Content(isSentByMe, content));
     this.setState({
       friends: this.state.friends,
     });
   }
 
+  notice(buffer){
+    for(let i=0; i !== buffer.length; i++){
+      console.log("buffer[",i,"]",buffer[i]);
+      this.updateContents(buffer[i].content, buffer[i].friendId, false);
+    }
+  }
+
   render() {
 
-    var main;
     var chatroom;
+
+    var contents;
+
+    var index = this.state.friends.findIndex((friend) => {
+      return (friend.id == this.state.chattingId);
+    })
+
+    if (index == -1) contents = [];
+    else contents = this.state.friends[index].contents
+
+
     if(this.state.chattingId !== undefined)
     {
       chatroom = (
       <ChatRoom updateContents={this.updateContents}
         id={this.state.id}
         chattingId={this.state.chattingId}
-        contents={
-          (this.state.friends[this.state.chattingId] == undefined) ? [] : this.state.friends[this.state.chattingId].contents} />)
+        contents={contents}/>)
     }
+
+    var main;
+
     if(this.state.id !== undefined)
     {
       main = (
@@ -98,7 +118,6 @@ class ChatRoomApp extends Component {
       </div>
       );
     }
-
 
     return (
       <div className="frame">
