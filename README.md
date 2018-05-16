@@ -8,11 +8,15 @@ step1
 
 step2
 
-    cd client
+    cd chatroom/client
 
 step3
 
-    npm build
+    npm install
+
+step4
+
+    npm run-script build
 
 step4 
 
